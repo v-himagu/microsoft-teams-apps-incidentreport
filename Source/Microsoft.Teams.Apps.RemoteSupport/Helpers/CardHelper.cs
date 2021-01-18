@@ -19,6 +19,7 @@ namespace Microsoft.Teams.Apps.RemoteSupport.Helpers
     using Microsoft.Extensions.Localization;
     using Microsoft.Extensions.Logging;
     using Microsoft.Teams.Apps.RemoteSupport.Cards;
+    using Microsoft.Teams.Apps.RemoteSupport.Common;
     using Microsoft.Teams.Apps.RemoteSupport.Common.Models;
     using Microsoft.Teams.Apps.RemoteSupport.Common.Providers;
     using Microsoft.Teams.Apps.RemoteSupport.Models;
@@ -395,7 +396,14 @@ namespace Microsoft.Teams.Apps.RemoteSupport.Helpers
                 {
                     try
                     {
-                        keyValuePair.Add(item.Key, TicketHelper.ConvertToDateTimeoffset(DateTime.Parse(item.Value, CultureInfo.InvariantCulture), timeSpan).ToString(CultureInfo.InvariantCulture));
+                        if (CultureInfo.CurrentCulture.ToString() != Constants.DefaultCulture)
+                        {
+                            keyValuePair.Add(item.Key, item.Value);
+                        }
+                        else
+                        {
+                            keyValuePair.Add(item.Key, TicketHelper.ConvertToDateTimeoffset(DateTime.Parse(item.Value, CultureInfo.InvariantCulture), timeSpan).ToString(CultureInfo.InvariantCulture));
+                        }
                     }
 #pragma warning disable CA1031 // Do not catch general exception types
                     catch
@@ -523,7 +531,7 @@ namespace Microsoft.Teams.Apps.RemoteSupport.Helpers
         /// <returns>Adaptive card supported date time format else return sting as-is.</returns>
         public static string AdaptiveTextParseWithDateTime(string inputText)
         {
-            if (DateTime.TryParse(inputText, out DateTime inputDateTime))
+            if (DateTime.TryParse(inputText, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime inputDateTime))
             {
                 return "{{DATE(" + inputDateTime.ToUniversalTime().ToString(CardConstants.Rfc3339DateTimeFormat, CultureInfo.InvariantCulture) + ", SHORT)}}";
             }
