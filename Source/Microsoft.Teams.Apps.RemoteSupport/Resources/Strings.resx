@@ -476,4 +476,8 @@
     <value>* To check requests assignements, click the small version of my icon near your message formatting options.</value>
     <comment>Text to show as a bullet point in team welcome card.</comment>
   </data>
+  <data name="ExpertList" xml:space="preserve">
+    <value>Expert List</value>
+    <comment>Text to show on list of experts from command list.</comment>
+  </data>
 </root>
