@@ -138,5 +138,15 @@ namespace Microsoft.Teams.Apps.RemoteSupport.Common
         /// Closed requests command id in the manifest file.
         /// </summary>
         public const string ClosedCommandId = "closedrequests";
+
+        /// <summary>
+        /// Normal request type text.
+        /// </summary>
+        public const string NormalString = "Normal";
+
+        /// <summary>
+        /// Default culture text.
+        /// </summary>
+        public const string DefaultCulture = "en-US";
     }
 }
